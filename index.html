@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homework: Verb "To Be" & Vocabulary (Starter A0)</title>
+<style>
+  :root {
+    --bg: #f6f8f7;
+    --card: #ffffff;
+    --sage: #5c7a6b;
+    --sage-light: #e8efeb;
+    --sage-dark: #3f574b;
+    --text: #1f2924;
+    --muted: #617068;
+    --border: #dce4df;
+    --correct-bg: #e6f4ea;
+    --correct-border: #34a853;
+    --correct-text: #1e6b34;
+    --wrong-bg: #fce8e6;
+    --wrong-border: #ea4335;
+    --wrong-text: #a51d24;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    padding: 32px 16px 64px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    color: var(--sage-dark);
+  }
+
+  .level-tag {
+    background: var(--sage-light);
+    color: var(--sage-dark);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    border-radius: 999px;
+  }
+
+  /* Quick Grammar Cheat-Sheet */
+  .grammar-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+
+  .grammar-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--sage);
+    margin-bottom: 14px;
+  }
+
+  .grammar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .g-col {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+
+  .g-col strong {
+    display: block;
+    color: var(--sage-dark);
+    margin-bottom: 6px;
+    font-size: 1rem;
+  }
+
+  /* Section Styling */
+  .section-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+  }
+
+  .section-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+  }
+
+  .section-num {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--sage);
+  }
+
+  .section-header h2 {
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-top: 2px;
+  }
+
+  /* Task Items */
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .task-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .task-item.is-correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-border);
+  }
+
+  .task-item.is-wrong {
+    background: var(--wrong-bg);
+    border-color: var(--wrong-border);
+  }
+
+  .context-hint {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .sentence {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .blank-slot {
+    display: inline-block;
+    min-width: 72px;
+    padding: 0 8px;
+    border-bottom: 2px solid var(--sage);
+    color: var(--sage-dark);
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .opt-btn {
+    background: #ffffff;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+
+  .opt-btn:hover {
+    border-color: var(--sage);
+    background: var(--sage-light);
+  }
+
+  .opt-btn.selected {
+    background: var(--sage);
+    color: #ffffff;
+    border-color: var(--sage);
+  }
+
+  .task-item.is-correct .opt-btn.selected {
+    background: var(--correct-border);
+    border-color: var(--correct-border);
+    color: #ffffff;
+  }
+
+  .task-item.is-wrong .opt-btn.selected {
+    background: var(--wrong-border);
+    border-color: var(--wrong-border);
+    color: #ffffff;
+  }
+
+  .feedback-msg {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: none;
+  }
+
+  .task-item.is-correct .feedback-msg {
+    display: block;
+    color: var(--correct-text);
+  }
+
+  .task-item.is-wrong .feedback-msg {
+    display: block;
+    color: var(--wrong-text);
+  }
+
+  /* Vocabulary Grid */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .vocab-word {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--sage-dark);
+    margin-bottom: 10px;
+  }
+
+  /* Bottom Bar */
+  .actions-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 12px;
+  }
+
+  .primary-btn {
+    background: var(--sage);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 26px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .primary-btn:hover {
+    background: var(--sage-dark);
+  }
+
+  .secondary-btn {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .secondary-btn:hover {
+    background: var(--sage-light);
+  }
+
+  .score-box {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--sage-dark);
+  }
+
+  @media (max-width: 680px) {
+    .grammar-grid,
+    .vocab-grid {
+      grid-template-columns: 1fr;
+    }
+    .section-card,
+    header {
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>Homework: Verb "To Be" & Words</h1>
+    </div>
+    <span class="level-tag">Level: Starter (A0)</span>
+  </header>
+
+  <!-- Simple Grammar Reference -->
+  <div class="grammar-box">
+    <div class="grammar-title">Remember: Verb "To Be"</div>
+    <div class="grammar-grid">
+      <div class="g-col">
+        <strong>+ Positive</strong>
+        I <b>am</b><br>
+        He / She / It <b>is</b><br>
+        You / We / They <b>are</b>
+      </div>
+      <div class="g-col">
+        <strong>- Negative</strong>
+        I <b>am not</b> ('m not)<br>
+        He / She / It <b>is not</b> (isn't)<br>
+        You / We / They <b>are not</b> (aren't)
+      </div>
+      <div class="g-col">
+        <strong>? Question</strong>
+        <b>Am</b> I ...?<br>
+        <b>Is</b> he / she / it ...?<br>
+        <b>Are</b> you / we / they ...?
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 1: GRAMMAR -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">Part 1 — Grammar</div>
+      <h2>Choose the correct form of "to be"</h2>
+    </div>
+    <div class="task-list" id="grammarTasks"></div>
+  </div>
+
+  <!-- PART 2: VOCABULARY -->
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-num">Part 2 — Vocabulary</div>
+      <h2>Choose the correct translation</h2>
+    </div>
+    <div class="vocab-grid" id="vocabTasks"></div>
+  </div>
+
+  <!-- CHECK & SCORE -->
+  <div class="actions-bar">
+    <div class="btn-group">
+      <button class="primary-btn" onclick="checkAll()">Check Answers</button>
+      <button class="secondary-btn" onclick="resetAll()">Try Again</button>
+    </div>
+    <div class="score-box" id="scoreDisplay">Score: — / 24</div>
+  </div>
+</div>
+
+<script>
+const grammarData = [
+  {
+    hint: "👋 Hello! My name is Olena.",
+    before: "I ",
+    after: " a student.",
+    options: ["am", "is", "are"],
+    answer: "am"
+  },
+  {
+    hint: "👨‍⚕️ Mark works in a hospital.",
+    before: "He ",
+    after: " a doctor.",
+    options: ["am", "is", "are"],
+    answer: "is"
+  },
+  {
+    hint: "👯 Anna and Mia are in my class.",
+    before: "They ",
+    after: " my classmates.",
+    options: ["am", "is", "are"],
+    answer: "are"
+  },
+  {
+    hint: "🐱 This cat is very small.",
+    before: "It ",
+    after: " a big cat.",
+    options: ["am not", "isn't", "aren't"],
+    answer: "isn't"
+  },
+  {
+    hint: "❓ Question about your friend:",
+    before: "",
+    after: " Tom tall?",
+    options: ["Am", "Is", "Are"],
+    answer: "Is"
+  },
+  {
+    hint: "📚 English is easy for me.",
+    before: "It ",
+    after: " difficult.",
+    options: ["am not", "isn't", "aren't"],
+    answer: "isn't"
+  },
+  {
+    hint: "❓ Question for your friends:",
+    before: "",
+    after: " you happy today?",
+    options: ["Am", "Is", "Are"],
+    answer: "Are"
+  },
+  {
+    hint: "💎 This phone costs $2,000!",
+    before: "It ",
+    after: " very expensive.",
+    options: ["am", "is", "are"],
+    answer: "is"
+  },
+  {
+    hint: "🏫 We are at home today, not at school.",
+    before: "We ",
+    after: " at school now.",
+    options: ["am not", "isn't", "aren't"],
+    answer: "aren't"
+  },
+  {
+    hint: "🇺🇦 I am from Ukraine.",
+    before: "I ",
+    after: " from Spain.",
+    options: ["am not", "isn't", "aren't"],
+    answer: "am not"
+  },
+  {
+    hint: "❓ Question about a book:",
+    before: "",
+    after: " this book interesting?",
+    options: ["Am", "Is", "Are"],
+    answer: "Is"
+  },
+  {
+    hint: "🐕 Max and Rex are good dogs.",
+    before: "They ",
+    after: " bad dogs.",
+    options: ["am not", "isn't", "aren't"],
+    answer: "aren't"
+  }
+];
+
+const vocabData = [
+  {
+    word: "tall",
+    options: ["високий", "маленький", "сумний"],
+    answer: "високий"
+  },
+  {
+    word: "smart",
+    options: ["розумний", "старий", "холодний"],
+    answer: "розумний"
+  },
+  {
+    word: "difficult",
+    options: ["складний", "цікавий", "дешевий"],
+    answer: "складний"
+  },
+  {
+    word: "expensive",
+    options: ["дорогий", "великий", "щасливий"],
+    answer: "дорогий"
+  },
+  {
+    word: "classmates",
+    options: ["однокласники", "лікарі", "батьки"],
+    answer: "однокласники"
+  },
+  {
+    word: "interesting",
+    options: ["цікавий", "поганий", "новий"],
+    answer: "цікавий"
+  },
+  {
+    word: "лікар",
+    options: ["doctor", "student", "friend"],
+    answer: "doctor"
+  },
+  {
+    word: "щасливий",
+    options: ["happy", "big", "tall"],
+    answer: "happy"
+  },
+  {
+    word: "друзі",
+    options: ["friends", "names", "books"],
+    answer: "friends"
+  },
+  {
+    word: "великий",
+    options: ["big", "small", "smart"],
+    answer: "big"
+  },
+  {
+    word: "ім'я",
+    options: ["name", "student", "doctor"],
+    answer: "name"
+  },
+  {
+    word: "студент / учень",
+    options: ["student", "classmate", "teacher"],
+    answer: "student"
+  }
+];
+
+const userAnswers = {
+  grammar: {},
+  vocab: {}
+};
+
+function renderGrammar() {
+  const container = document.getElementById("grammarTasks");
+  container.innerHTML = grammarData.map((item, idx) => `
+    <div class="task-item" id="g-card-${idx}">
+      <div class="context-hint">${item.hint}</div>
+      <div class="sentence">
+        ${idx + 1}. ${item.before}<span class="blank-slot" id="g-slot-${idx}">___</span>${item.after}
+      </div>
+      <div class="options">
+        ${item.options.map(opt => `
+          <button class="opt-btn" onclick="selectGrammar(${idx}, '${opt.replace("'", "\'")}', this)">${opt}</button>
+        `).join("")}
+      </div>
+      <div class="feedback-msg" id="g-fb-${idx}"></div>
+    </div>
+  `).join("");
+}
+
+function renderVocab() {
+  const container = document.getElementById("vocabTasks");
+  container.innerHTML = vocabData.map((item, idx) => `
+    <div class="task-item" id="v-card-${idx}">
+      <div class="vocab-word">${idx + 1}. ${item.word}</div>
+      <div class="options">
+        ${item.options.map(opt => `
+          <button class="opt-btn" onclick="selectVocab(${idx}, '${opt.replace("'", "\'")}', this)">${opt}</button>
+        `).join("")}
+      </div>
+      <div class="feedback-msg" id="v-fb-${idx}"></div>
+    </div>
+  `).join("");
+}
+
+function selectGrammar(idx, val, btn) {
+  userAnswers.grammar[idx] = val;
+  document.getElementById(`g-slot-${idx}`).textContent = val;
+
+  const card = document.getElementById(`g-card-${idx}`);
+  card.classList.remove("is-correct", "is-wrong");
+  card.querySelectorAll(".opt-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function selectVocab(idx, val, btn) {
+  userAnswers.vocab[idx] = val;
+
+  const card = document.getElementById(`v-card-${idx}`);
+  card.classList.remove("is-correct", "is-wrong");
+  card.querySelectorAll(".opt-btn").forEach(b => b.classList.remove("selected"));
+  btn.classList.add("selected");
+}
+
+function checkAll() {
+  let score = 0;
+  const total = grammarData.length + vocabData.length;
+
+  grammarData.forEach((item, idx) => {
+    const card = document.getElementById(`g-card-${idx}`);
+    const fb = document.getElementById(`g-fb-${idx}`);
+    const chosen = userAnswers.grammar[idx];
+
+    card.classList.remove("is-correct", "is-wrong");
+    if (chosen === item.answer) {
+      score++;
+      card.classList.add("is-correct");
+      fb.textContent = "Correct!";
+    } else {
+      card.classList.add("is-wrong");
+      fb.textContent = `Answer: ${item.answer}`;
+    }
+  });
+
+  vocabData.forEach((item, idx) => {
+    const card = document.getElementById(`v-card-${idx}`);
+    const fb = document.getElementById(`v-fb-${idx}`);
+    const chosen = userAnswers.vocab[idx];
+
+    card.classList.remove("is-correct", "is-wrong");
+    if (chosen === item.answer) {
+      score++;
+      card.classList.add("is-correct");
+      fb.textContent = "Correct!";
+    } else {
+      card.classList.add("is-wrong");
+      fb.textContent = `Answer: ${item.answer}`;
+    }
+  });
+
+  document.getElementById("scoreDisplay").textContent = `Score: ${score} / ${total}`;
+}
+
+function resetAll() {
+  userAnswers.grammar = {};
+  userAnswers.vocab = {};
+  document.getElementById("scoreDisplay").textContent = "Score: — / 24";
+  renderGrammar();
+  renderVocab();
+}
+
+renderGrammar();
+renderVocab();
+</script>
+
+</body>
+</html>
